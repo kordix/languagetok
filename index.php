@@ -71,7 +71,8 @@
                     ],
                     current:0,
                     napisy:false,
-                    played:false
+                    played:false,
+                    counterset:1
                 }
             },
             methods:{
@@ -118,11 +119,13 @@
                 let self = this;
                 await axios.get('/api/fragments.php').then((res)=>self.fragments = res.data);
 
-                self.fragments = self.fragments.filter((el)=>el.counter < 1)
+                let filtered = self.fragments.filter((el)=>el.counter < this.counterset)
 
-
-
-
+                if(filtered.length == 0){
+                    this.counterset += 1;
+                    filtered = self.fragments.filter((el)=>el.counter < this.counterset)
+                }
+                
                 // let audi = document.getElementById('audioelem');
                
 
