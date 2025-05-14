@@ -123,9 +123,9 @@
 
                 if(filtered.length == 0){
                     this.counterset += 1;
-                    filtered = self.fragments.filter((el)=>el.counter < this.counterset)
+                    filtered = self.fragments.filter((el)=>el.counter < self.counterset)
                 }
-                
+
                 // let audi = document.getElementById('audioelem');
                
 
