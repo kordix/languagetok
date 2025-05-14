@@ -113,7 +113,7 @@
                     let counter = parseInt(elem.counter) + 1;
                     axios.get('/api/update.php?id=' + elem.id + '&counter=' + counter);
                 },
-                getData() {
+                async getData() {
 
                     let self = this;
                     await axios.get('/api/fragments.php').then((res) => self.fragments = res.data);
@@ -131,6 +131,7 @@
             },
 
             async mounted() {
+                this.getData();
 
 
                 // let audi = document.getElementById('audioelem');
