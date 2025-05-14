@@ -119,7 +119,7 @@
                 let self = this;
                 await axios.get('/api/fragments.php').then((res)=>self.fragments = res.data);
 
-                let filtered = self.fragments.filter((el)=>el.counter < this.counterset)
+                let filtered = self.fragments.filter((el)=>el.counter < self.counterset)
 
                 if(filtered.length == 0){
                     this.counterset += 1;
