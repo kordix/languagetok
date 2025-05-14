@@ -18,13 +18,13 @@
 
         <div id="app">
             <div v-for="(elem,index) in fragments" v-show="index == current">
-            <audio controls :id="'audioelem'+index" >
-                <source :src="'/mp3/'+elem.filename" type="audio/mpeg">
-            </audio>
-            <p><span v-if="napisy"> {{elem.tekst}}</span></p>
-            {{elem.counter}}
+                <audio controls :id="'audioelem'+index">
+                    <source :src="'/mp3/'+elem.filename" type="audio/mpeg">
+                </audio>
+                <p><span v-if="napisy"> {{elem.tekst}}</span></p>
+                {{elem.counter}}
 
-            Id:{{elem.id}}
+                Id:{{elem.id}}
             </div>
             <br><br>
             <button class="btn btn-success" @click="next">Dalej</button>
@@ -32,7 +32,7 @@
             <br>
             {{current}}
 
-           
+
 
             <!-- <p><b>{{elem.counter}}</b></p> -->
 
@@ -42,7 +42,7 @@
     </div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
@@ -50,7 +50,7 @@
         Vue.createApp({
             data() {
                 return {
-                    fragments:[],
+                    fragments: [],
                     dane: [
                         { file: 'output.mp3', tekst: "Let's get it crunk upon Have fun upon up in this dancery" },
                         { file: 'output2.mp3', tekst: "We got ya'll open, now ya floatin So you gots to dance for me" },
@@ -69,33 +69,33 @@
                         { file: 'output15.mp3', tekst: "Making you dance all night and I" },
                         { file: 'output16.mp3', tekst: "Doesn't matter if you're white or black " },
                     ],
-                    current:0,
-                    napisy:false,
-                    played:false,
-                    counterset:1
+                    current: 0,
+                    napisy: false,
+                    played: false,
+                    counterset: 1
                 }
             },
-            methods:{
-                next(){
+            methods: {
+                next() {
 
-                    let audi = document.getElementById('audioelem'+this.current);
-                    if(this.napisy){
+                    let audi = document.getElementById('audioelem' + this.current);
+                    if (this.napisy) {
                         audi.pause();
                     }
-                    if(!this.played){
+                    if (!this.played) {
                         audi.play();
                         this.played = true;
                         return;
                     }
 
-                    if(!this.napisy){
+                    if (!this.napisy) {
                         this.napisy = true
-                        
+
                         this.update(this.fragments[this.current]);
 
                     } else {
                         this.current++;
-                       
+
                         audi = document.getElementById('audioelem' + this.current);
                         this.napisy = false;
                     }
@@ -104,32 +104,37 @@
                         audi.play();
                     }
 
-                    if(this.current > this.dane.length - 1){
+                    if (this.current > this.dane.length - 1) {
                         this.current = 0;
                     }
 
                 },
-                update(elem){
-                    let counter = parseInt(elem.counter)+1;
-                    axios.get('/api/update.php?id='+elem.id+'&counter='+counter);
+                update(elem) {
+                    let counter = parseInt(elem.counter) + 1;
+                    axios.get('/api/update.php?id=' + elem.id + '&counter=' + counter);
                 },
-            },
-          
-            async mounted(){
-                let self = this;
-                await axios.get('/api/fragments.php').then((res)=>self.fragments = res.data);
+                getData() {
 
-                let filtered = self.fragments.filter((el)=>el.counter < self.counterset)
+                    let self = this;
+                    await axios.get('/api/fragments.php').then((res) => self.fragments = res.data);
 
-                if(filtered.length == 0){
-                    this.counterset += 1;
-                    filtered = self.fragments.filter((el)=>el.counter < self.counterset)
+                    let filtered = self.fragments.filter((el) => el.counter < self.counterset)
+
+                    if (filtered.length == 0) {
+                        this.counterset += 1;
+                        this.getData();
+                    }
+
+                    this.fragments = filtered;
+
                 }
+            },
 
-                this.fragments = filtered;
+            async mounted() {
+
 
                 // let audi = document.getElementById('audioelem');
-               
+
 
             }
 
