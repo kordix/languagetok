@@ -126,6 +126,8 @@
                     filtered = self.fragments.filter((el)=>el.counter < self.counterset)
                 }
 
+                this.fragments = filtered;
+
                 // let audi = document.getElementById('audioelem');
                
 
