@@ -1,0 +1,42 @@
+Uwaga to będzie trochę skomplikowane:
+
+[00:06.65]I like the way you kiss me, I can tell you miss me
+[00:09.84]I can tell it hits, hits, hits, hits
+[00:12.76]Not tryna be romantic, I'll hit it from the back
+[00:15.95]Just so you don't get attached (Attached, attached, attached)
+[00:19.40]I like the way you kiss me, I can tell you miss me
+[00:22.59]I can tell it hits, hits, hits, hits
+[00:25.51]Not tryna be romantic, I'll hit it from the back
+[00:28.70]Just so you don't get attached (Attached, attached, attached)
+[00:31.13]You bite my lip, I just want the taste
+[00:34.31]Get on your muse, I'm on the case
+[00:37.50]You take the heat, we'll miss such grace
+[00:40.71]You say we don't, but here you stay
+[00:42.83]You said you're scared I'll get you down now
+[00:46.02]Just stick around and you'll find out
+[00:49.21]But don't you wanna make me proud?
+[00:52.39]'Cause I'm so proud, baby, I'm so proud of you
+[01:03.58]Not tryna be romantic, I'll hit it from the back
+[01:06.77]Just so you don't get attached (Attached, attached, attached)
+[01:16.33]Not tryna be romantic, I'll hit it from the back
+[01:19.25]Just so you don't get attached (Attached, attached, attached)
+[01:21.90]Don't stress you out, can I help you out?
+[01:24.56]Does it turn you on when I show you around?
+[01:27.75]Can we make a scene? (Scene)
+[01:29.34]Do you make it loud? (Loud)
+[01:30.94]'Cause I'm so proud, baby, I'm so proud of you
+[01:39.17]So proud of you
+
+wygeneruj komendy ffmpeg do wycięcia fragmentów utworów 
+każdy fragment ma zawierać dwie linijki np. od 6.65 do 12.76
+
+plik źródłowy kiss.mp3 output kiss1.mp3 kiss2.mp3 itd.
+
+UWAGA trzeba jeszcze wygenerować inserty bo bazy danych
+
+np.
+INSERT INTO fragments (filename,tekst) values(kiss1.mp3,"I like the way you kiss me, I can tell you miss me I can tell it hits, hits, hits, hits")
+
+Wartość dla kolumny tekst niech jest w cudzysłowach
+
+Jesteś w stanie sobie z tym poradzić?
