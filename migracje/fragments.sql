@@ -4,3 +4,6 @@ CREATE TABLE fragments(
     tekst varchar(255),
     counter int default 0
 )
+
+alter table fragments
+add column fav varchar(1) default '';
