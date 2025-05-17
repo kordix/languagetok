@@ -70,7 +70,11 @@
                         v-if="!fragments[current].fav">➕⭐</button>
                     <button class="btn btn-danger" style="margin-left:5px" @click="addFav" v-else>➖⭐</button>
                 </div>
-                <button class="btn btn-secondary" @click="prev">⬅️</button>
+                <div>
+                    <button class="btn btn-danger" @click="remove">🗑️</button>
+                    &nbsp;
+                    <button class="btn btn-secondary" @click="prev">⬅️</button>
+                </div>
             </div>
 
             <div v-if="end">
@@ -110,6 +114,10 @@
                 }
             },
             methods: {
+                remove() {
+                    let elem = this.fragments[this.current];
+                    axios.post('/api/remove.php', { id: elem.id, token: 'vzupoiuoiaugdsfhdcv' });
+                },
                 reset() {
                     let self = this;
                     axios.get('/api/reset.php').then((res) => location.reload())
