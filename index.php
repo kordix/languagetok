@@ -93,7 +93,8 @@
                 next() {
                     if (this.current >= this.fragments.length - 1) {
                         this.end = true;
-                        this.fragments[this.current].counter += 1;
+                        this.napisy = true;
+                        this.fragments[this.current].counter = parseInt(this.fragments[this.current].counter) + 1;
                         this.update(this.fragments[this.current]);
                         return;
                     }
