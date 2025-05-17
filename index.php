@@ -46,10 +46,13 @@
                 <p v-if="favourite">Razem: {{fragments.length}}. Zostało: {{fragments.length - current}} </p>
             </div>
          
-            <div v-if="fragments.length > 0 && !end">
-                <button class="btn btn-success" style="width:100px" @click="next" id="nextbutton"><span v-if="!napisy && played">📜</span> <span v-if="napisy && played">➡️</span> <span v-if="!played">▶️&nbsp;</span>Dalej</button>
-                <button class="btn btn-warning" style="margin-left:5px" @click="addFav" v-if="!fragments[current].fav">➕⭐</button>
-                <button class="btn btn-danger" style="margin-left:5px" @click="addFav" v-else>➖⭐</button>
+            <div v-if="fragments.length > 0 && !end" style="display:flex;justify-content:space-between">
+                <div>
+                    <button class="btn btn-success" style="width:100px" @click="next" id="nextbutton"><span v-if="!napisy && played">📜</span> <span v-if="napisy && played">➡️</span> <span v-if="!played">▶️&nbsp;</span>Dalej</button>
+                    <button class="btn btn-warning" style="margin-left:5px" @click="addFav" v-if="!fragments[current].fav">➕⭐</button>
+                    <button class="btn btn-danger" style="margin-left:5px" @click="addFav" v-else>➖⭐</button>
+                </div>
+                <button class="btn btn-secondary" @click="prev">⬅️</button>
             </div>
 
             <div v-if="end">
@@ -104,6 +107,15 @@
                     this.favourite = false;
                     localStorage.favourite = '';
                     location.reload();
+                },
+                prev(){
+                    let audi = document.getElementById('audioelem' + this.current);
+                    audi.pause();
+                    this.current -= 1;
+                    this.napisy = true;
+                    let audi2 = document.getElementById('audioelem' + this.current);    
+                    audi2.currentTime = 0;
+                    audi2.play();
                 },
                 next() {
                     if (this.current >= this.fragments.length - 1) {
