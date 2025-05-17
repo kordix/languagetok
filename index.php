@@ -46,10 +46,14 @@
                 <p v-if="favourite">Razem: {{fragments.length}}. Zostało: {{fragments.length - current}} </p>
             </div>
          
-            <div v-if="fragments.length > 0">
+            <div v-if="fragments.length > 0 && !end">
                 <button class="btn btn-success" style="width:100px" @click="next" id="nextbutton"><span v-if="!napisy && played">📜</span> <span v-if="napisy && played">➡️</span> <span v-if="!played">▶️&nbsp;</span>Dalej</button>
                 <button class="btn btn-warning" style="margin-left:5px" @click="addFav" v-if="!fragments[current].fav">➕⭐</button>
                 <button class="btn btn-danger" style="margin-left:5px" @click="addFav" v-else>➖⭐</button>
+            </div>
+
+            <div v-if="end">
+               <b> KONIEC </b> &nbsp; <button @click="refresh" class="btn btn-dark">🔄 Przeładuj</button>
             </div>
         </div>
 
@@ -68,10 +72,14 @@
                     current: 0,
                     napisy: false,
                     played: false,
-                    counterset: 1
+                    counterset: 1,
+                    end:false
                 }
             },
             methods: {
+                refresh(){
+                    location.reload()
+                },
                 setFavourite(){
                     this.favourite = true;
                     localStorage.favourite = 'JO';
@@ -83,6 +91,12 @@
                     location.reload();
                 },
                 next() {
+                    if (this.current >= this.fragments.length - 1) {
+                        this.end = true;
+                        this.fragments[this.current].counter += 1;
+                        this.update(this.fragments[this.current]);
+                        return;
+                    }
 
                     let audi = document.getElementById('audioelem' + this.current);
                     if (this.napisy) {
@@ -110,9 +124,7 @@
                         audi.play();
                     }
 
-                    if (this.current >= this.fragments.length - 1) {
-                        this.current = 0;
-                    }
+                 
 
                 },
                 update(elem) {
