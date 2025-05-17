@@ -29,46 +29,34 @@
 <body>
 
     <div class="container">
-        <br><br>
-        
-
+        <br>
         <div id="app" style="max-width:400px">
             <div style="display:flex;justify-content:flex-end">
-            <button class="btn-secondary" v-if="!favourite" @click="setFavourite">⭐Ulubione</button>
-            <button class="favbutton btn-warning" v-if="favourite" @click="unsetFavourite">⭐Ulubione</button>
+                <button class="btn-secondary" v-if="!favourite" @click="setFavourite">⭐Ulubione</button>
+                <button class="favbutton btn-warning" v-if="favourite" @click="unsetFavourite">⭐Ulubione</button>
             </div>
-            <br><br>
+            <br>
             <div v-for="(elem,index) in fragments" v-show="index == current">
                 <audio controls :id="'audioelem'+index">
                     <source :src="'/mp3/'+elem.filename" type="audio/mpeg">
                 </audio>
-                <p><span v-if="napisy"> {{elem.tekst}}</span></p>
+                <p style="height:20px"><span v-if="napisy"> {{elem.tekst}}</span></p>
+                <br>
                 <p style="font-size:10px">Id:{{elem.id}}</p>
                 <p v-if="favourite">Razem: {{fragments.length}}. Zostało: {{fragments.length - current}} </p>
             </div>
-            <br>
+         
             <div v-if="fragments.length > 0">
-            <button class="btn btn-success" style="width:100px" @click="next" id="nextbutton"><span v-if="!napisy && played">📜</span> <span v-if="napisy && played">➡️</span> <span v-if="!played">▶️&nbsp;</span>Dalej</button>
-
-     
-            <button class="btn btn-warning" style="margin-left:5px" @click="addFav" v-if="!fragments[current].fav">➕⭐</button>
-
-            <button class="btn btn-danger" style="margin-left:5px" @click="addFav" v-else>➖⭐</button>
+                <button class="btn btn-success" style="width:100px" @click="next" id="nextbutton"><span v-if="!napisy && played">📜</span> <span v-if="napisy && played">➡️</span> <span v-if="!played">▶️&nbsp;</span>Dalej</button>
+                <button class="btn btn-warning" style="margin-left:5px" @click="addFav" v-if="!fragments[current].fav">➕⭐</button>
+                <button class="btn btn-danger" style="margin-left:5px" @click="addFav" v-else>➖⭐</button>
             </div>
-
-
-            <br>
-        
-            <!-- <p><b>{{elem.counter}}</b></p> -->
-
-
         </div>
 
     </div>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
-
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
 
@@ -77,24 +65,6 @@
                 return {
                     favourite:false,
                     fragments: [],
-                    dane: [
-                        { file: 'output.mp3', tekst: "Let's get it crunk upon Have fun upon up in this dancery" },
-                        { file: 'output2.mp3', tekst: "We got ya'll open, now ya floatin So you gots to dance for me" },
-                        { file: 'output3.mp3', tekst: "Don't need no hateration, holleration In this dancery" },
-                        { file: 'output4.mp3', tekst: "So just dance for me Come on everybody get on up " },
-                        { file: 'output5.mp3', tekst: "Mary J. is in the spot tonight And I'ma make you feel alright" },
-                        { file: 'output6.mp3', tekst: "Come on baby just party with me Let loose and set your body free" },
-                        { file: 'output7.mp3', tekst: "Leave your situations at the door So when you step inside, jump on the floor" },
-                        { file: 'output8.mp3', tekst: "Before you get loose and start to lose your mind Cop you a drink, go 'head and rock your ice" },
-                        { file: 'output9.mp3', tekst: "Cause we celebrating No More Drama in our life With a Dre track pumpin', everybody's jumpin'" },
-                        { file: 'output10.mp3', tekst: "Go ahead and twist your back and get your body bumpin' I told you leave your situations at the door" },
-                        { file: 'output11.mp3', tekst: "So grab somebody and get your ass on the dance floor" },
-                        { file: 'output12.mp3', tekst: "Work real hard to make a dime" },
-                        { file: 'output13.mp3', tekst: "Leave all that BS outside" },
-                        { file: 'output14.mp3', tekst: "Let's have fun tonight, no fights" },
-                        { file: 'output15.mp3', tekst: "Making you dance all night and I" },
-                        { file: 'output16.mp3', tekst: "Doesn't matter if you're white or black " },
-                    ],
                     current: 0,
                     napisy: false,
                     played: false,
@@ -140,7 +110,7 @@
                         audi.play();
                     }
 
-                    if (this.current > this.dane.length - 1) {
+                    if (this.current >= this.fragments.length - 1) {
                         this.current = 0;
                     }
 
