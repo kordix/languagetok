@@ -55,6 +55,17 @@
             <div v-if="end">
                <b> KONIEC </b> &nbsp; <button @click="refresh" class="btn btn-dark">🔄 Przeładuj</button>
             </div>
+
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <button class="btn btn-dark" @click="reset">🔄 Zresetuj</button>
         </div>
 
     </div>
@@ -77,6 +88,10 @@
                 }
             },
             methods: {
+                reset(){
+                    let self = this;
+                    axios.get('/api/reset.php').then((res)=>location.reload())
+                },  
                 refresh(){
                     location.reload()
                 },
