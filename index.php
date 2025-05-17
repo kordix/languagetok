@@ -42,7 +42,7 @@
                 </audio>
                 <p style="height:20px"><span v-if="napisy"> {{elem.tekst}}</span></p>
                 <br>
-                <p style="font-size:10px">Id:{{elem.id}}</p>
+                <p style="font-size:10px">Id:{{elem.id}} &nbsp; Counter: {{elem.counter}}</p>
                 <p v-if="favourite">Razem: {{fragments.length}}. Zostało: {{fragments.length - current}} </p>
             </div>
          

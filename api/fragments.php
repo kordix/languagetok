@@ -2,7 +2,7 @@
 
 require('db.php');
 
-$sth = $dbh->prepare("SELECT * FROM fragments order by counter desc,id");
+$sth = $dbh->prepare("SELECT * FROM fragments order by counter,id");
 
 $sth->execute();
 
