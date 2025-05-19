@@ -32,6 +32,18 @@
                 0 0 20px #ffd700,
                 0 0 40px #ffc107;
         }
+
+        [v-cloak]{
+            display:none
+        }
+
+        td{
+            border:1px black solid;
+        }
+
+        .highlight {
+            background:yellow;
+        }
     </style>
 </head>
 
@@ -39,7 +51,7 @@
 
     <div class="container">
         <br>
-        <div id="app" style="max-width:400px">
+        <div id="app" style="max-width:400px" v-cloak>
             <div style="display:flex;justify-content:flex-end">
                 <button class="btn-secondary" v-if="!favourite" @click="setFavourite">⭐Ulubione</button>
                 <button class="favbutton btn-warning" v-if="favourite" @click="unsetFavourite">⭐Ulubione</button>
@@ -57,7 +69,7 @@
                 </audio>
                 <p style="height:20px"><span v-if="napisy"> {{elem.tekst}}</span></p>
                 <br>
-                <p style="font-size:10px">Id:{{elem.id}} &nbsp; Counter: {{elem.counter}}</p>
+                <p style="font-size:10px">Id:{{elem.id}} &nbsp; Counter: {{elem.counter}} &nbsp; {{elem.filename}} </p>
                 <p v-if="favourite">Razem: {{fragments.length}}. Zostało: {{fragments.length - current}} </p>
             </div>
 
@@ -73,7 +85,7 @@
                 <div>
                     <button class="btn btn-danger" @click="remove">🗑️</button>
                     &nbsp;
-                    <button class="btn btn-secondary" @click="prev">⬅️</button>
+                    <button class="btn btn-secondary" @click="prev" v-if="current > 0">⬅️</button>
                 </div>
             </div>
 
@@ -90,7 +102,30 @@
             <br>
             <br>
 
-            <button class="btn btn-dark" @click="reset">🔄 Zresetuj</button>
+            <button class="btn btn-secondary" @click="settings=!settings">🔧</button>
+            <br> <br>
+
+            <div v-if="settings">
+                <button class="btn btn-info" v-if="current > 0" @click="join">Połącz z poprzednim 🔗</button>
+                <p v-if="joininfo" style="color:red">Połączono z poprzednim</p>
+<br><br>
+                <button class="btn btn-secondary" @click="list = !list">📋Lista</button>
+<br><br>
+                <table v-if="list">
+                    <tr v-for="(elem,index) in fragments" :class="{'highlight':index == current}" @click="current = index">
+                        <td>{{elem.id}}</td>
+                        <td>{{elem.tekst}}</td>
+                    </tr>
+                </table>
+
+                <br><br>
+                <button class="btn btn-dark" @click="reset">🔄 Zresetuj</button>
+                <br><br>
+                <button class="btn btn-primary">📤 Wgraj</button>
+            </div>
+            
+
+        
         </div>
 
     </div>
@@ -103,6 +138,9 @@
         Vue.createApp({
             data() {
                 return {
+                    list:false,
+                    joininfo:false,
+                    settings:false,
                     favourite: false,
                     fragments: [],
                     current: 0,
@@ -114,9 +152,20 @@
                 }
             },
             methods: {
+                join(){
+                    let id1 = this.fragments[this.current-1].id;
+                    let id2 = this.fragments[this.current].id;
+
+                    axios.get(`/mp3/join.php?id1=${id1}&id2=${id2}`);
+                    this.joininfo = true;
+                    
+
+                },
                 remove() {
                     let elem = this.fragments[this.current];
                     axios.post('/api/remove.php', { id: elem.id, token: 'vzupoiuoiaugdsfhdcv' });
+                    this.napisy = true;
+                    this.next()
                 },
                 reset() {
                     let self = this;
@@ -155,6 +204,7 @@
                     audi2.play();
                 },
                 next() {
+                    this.joininfo = false;
                     if (this.current >= this.fragments.length - 1) {
                         this.end = true;
                         this.napisy = true;
@@ -218,7 +268,8 @@
                         return;
                     }
 
-                    let filtered = self.fragments.filter((el) => el.counter < self.counterset)
+                    let filtered = self.fragments;
+                    // let filtered = self.fragments.filter((el) => el.counter < self.counterset)
 
                     if (filtered.length == 0) {
                         this.counterset += 1;
