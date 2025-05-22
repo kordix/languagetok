@@ -44,6 +44,9 @@
         .highlight {
             background:yellow;
         }
+        label{
+            display:block;
+        }
     </style>
 </head>
 
@@ -121,7 +124,19 @@
                 <br><br>
                 <button class="btn btn-dark" @click="reset">🔄 Zresetuj</button>
                 <br><br>
-                <button class="btn btn-primary">📤 Wgraj</button>
+                <button class="btn btn-primary" @click="wgraj = !wgraj" >📤 Wgraj</button>
+<br><br>
+                <div v-if="wgraj">
+                    <label for="">Link</label>
+                    <input type="text" v-model="source">
+
+                    <label for="">Nazwa pliku</label>
+                    <input type="text" v-model="filename">
+
+                    <label for="">Napisy</label>
+                    <input type="text" v-model="subtitles">
+                </div>
+                
             </div>
             
 
@@ -138,6 +153,10 @@
         Vue.createApp({
             data() {
                 return {
+                    wgraj:false,
+                    subtitles:'en',
+                    source:'',
+                    filename:'',
                     list:false,
                     joininfo:false,
                     settings:false,
@@ -152,6 +171,10 @@
                 }
             },
             methods: {
+                download(){
+                    axios.post('/output/pobierz.php',{
+                        source:'https://www.youtube.com/watch?v=9QCgqQdmr0M'});
+                },
                 join(){
                     let id1 = this.fragments[this.current-1].id;
                     let id2 = this.fragments[this.current].id;
