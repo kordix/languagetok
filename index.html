@@ -174,8 +174,15 @@
             },
             methods: {
                 download(){
-                    axios.post('/output/pobierz.php',{
-                        source:'https://www.youtube.com/watch?v=9QCgqQdmr0M'});
+                    axios.post('/output/pobierz.php',
+                        new URLSearchParams({
+                            source: 'https://www.youtube.com/watch?v=9QCgqQdmr0M'
+                        }), {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    });
+
                 },
                 join(){
                     let id1 = this.fragments[this.current-1].id;
