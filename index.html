@@ -130,13 +130,21 @@
                     <label for="">Link</label>
                     <input type="text" v-model="source">
 
+             
+                    <label for="">Napisy</label>
+                    <select name="" id="" v-model="subtitles">
+                        <option value="en">en</option>
+                        <option value="en-GB">en-GB</option>
+                    </select>
+                    <button @click="download">Ściągnij</button>
+
+
                     <label for="">Nazwa pliku</label>
                     <input type="text" v-model="filename">
 
-                    <label for="">Napisy</label>
-                    <input type="text" v-model="subtitles">
+                    <!-- <input type="text" v-model="subtitles"> -->
 
-                    <button @click="download">Ściągnij</button>
+                 
                 </div>
                 
             </div>
@@ -157,7 +165,7 @@
                 return {
                     wgraj:false,
                     subtitles:'en',
-                    source:'',
+                    source:'https://www.youtube.com/watch?v=9QCgqQdmr0M',
                     filename:'',
                     list:false,
                     joininfo:false,
@@ -176,7 +184,8 @@
                 download(){
                     axios.post('/output/pobierz.php',
                         new URLSearchParams({
-                            source: 'https://www.youtube.com/watch?v=9QCgqQdmr0M'
+                            source: this.source,
+                            subtitles:this.subtitles
                         }), {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
