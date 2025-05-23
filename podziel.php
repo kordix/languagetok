@@ -67,7 +67,7 @@ foreach ($entries as $i => $entry) {
     $file = $_POST['file'];
 
     $text = implode(' ', $entry['text']);
-    $filename = "$file_$i.mp3";
+    $filename = $file.'_'.$i.'.mp3';
     $outputPath = $outputDir . $sep . $filename;
 
     // Wywołanie ffmpeg
