@@ -118,6 +118,7 @@
                     <tr v-for="(elem,index) in fragments" :class="{'highlight':index == current}" @click="current = index">
                         <td>{{elem.id}}</td>
                         <td>{{elem.tekst}}</td>
+                        <td>{{elem.filename}}</td>
                     </tr>
                 </table>
 
