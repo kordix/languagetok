@@ -111,7 +111,7 @@
             <div v-if="settings">
                 <button class="btn btn-info" v-if="current > 0" @click="join">Połącz z poprzednim 🔗</button>
                 <p v-if="joininfo" style="color:red">Połączono z poprzednim</p>
-<br><br>
+<br>
                 <button class="btn btn-secondary" @click="list = !list">📋Lista</button>
 <br><br>
                 <table v-if="list">
@@ -121,9 +121,7 @@
                     </tr>
                 </table>
 
-                <br><br>
-                <button class="btn btn-dark" @click="reset">🔄 Zresetuj</button>
-                <br><br>
+    
                 <button class="btn btn-primary" @click="wgraj = !wgraj" >📤 Wgraj</button>
 <br><br>
                 <div v-if="wgraj">
@@ -148,6 +146,10 @@
                     <!-- <input type="text" v-model="subtitles"> -->
 
                  
+                </div>
+
+                <div style="display:flex;justify-content:flex-end">
+                    <button class="btn btn-dark" @click="reset">🔄 Zresetuj</button>
                 </div>
                 
             </div>
