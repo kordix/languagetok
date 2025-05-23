@@ -111,7 +111,7 @@
             <div v-if="settings">
                 <button class="btn btn-info" v-if="current > 0" @click="join">Połącz z poprzednim 🔗</button>
                 <p v-if="joininfo" style="color:red">Połączono z poprzednim</p>
-<br>
+<br><br>
                 <button class="btn btn-secondary" @click="list = !list">📋Lista</button>
 <br><br>
                 <table v-if="list">
@@ -140,6 +140,7 @@
 
                     <label for="">Nazwa pliku</label>
                     <input type="text" v-model="filename">
+                    <p v-if="filemessage" style="color:red">WPISZ NAZWĘ PLIKU</p>
                     <br>
                     <button @click="podziel">Podziel</button>
 
@@ -168,6 +169,7 @@
         Vue.createApp({
             data() {
                 return {
+                    filemessage:'',
                     wgraj:false,
                     subtitles:'en',
                     source:'https://www.youtube.com/watch?v=9QCgqQdmr0M',
@@ -187,7 +189,19 @@
             },
             methods: {
                 podziel(){
-                    axios.get('/podziel.php')
+                    this.filemessage = false;
+                    if(!this.file){
+                        this.filemessage = true;
+                    }
+                    axios.post('/podziel.php',
+                        new URLSearchParams({
+                            file: this.filename,
+                            subtitles: this.subtitles
+                        }), {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    });
                 },
                 download(){
                     axios.post('/output/pobierz.php',

@@ -7,6 +7,7 @@ $sep = DIRECTORY_SEPARATOR;
 
 require_once 'db.php';
 
+
 $subFile = __DIR__ . $sep . 'output' . $sep . 'video.en-GB.srt';
 $audioFile = __DIR__ . $sep . 'output' . $sep . 'audio.mp3';
 $outputDir = __DIR__ . $sep . 'mp3';
@@ -56,8 +57,10 @@ foreach ($entries as $i => $entry) {
         continue;
     }
 
+    $file = $_POST['file'];
+
     $text = implode(' ', $entry['text']);
-    $filename = "test_$i.mp3";
+    $filename = "$file_$i.mp3";
     $outputPath = $outputDir . $sep . $filename;
 
     // Wywołanie ffmpeg
