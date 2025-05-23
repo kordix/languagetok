@@ -7,8 +7,15 @@ $sep = DIRECTORY_SEPARATOR;
 
 require_once 'db.php';
 
+$sub = $_POST['subtitles'];
 
-$subFile = __DIR__ . $sep . 'output' . $sep . 'video.en-GB.srt';
+if(!isset($sub)){
+    echo 'BRAK SUB';
+    return;
+}
+
+
+$subFile = __DIR__ . $sep . 'output' . $sep . 'video.'.$sub.'.srt';
 $audioFile = __DIR__ . $sep . 'output' . $sep . 'audio.mp3';
 $outputDir = __DIR__ . $sep . 'mp3';
 

@@ -192,6 +192,7 @@
                     this.filemessage = false;
                     if(!this.file){
                         this.filemessage = true;
+                        return;
                     }
                     axios.post('/podziel.php',
                         new URLSearchParams({
