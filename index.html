@@ -136,11 +136,14 @@
                         <option value="en">en</option>
                         <option value="en-GB">en-GB</option>
                     </select>
+                    <br>
                     <button @click="download">Ściągnij</button>
 
 
                     <label for="">Nazwa pliku</label>
                     <input type="text" v-model="filename">
+                    <br>
+                    <button @click="podziel">Podziel</button>
 
                     <!-- <input type="text" v-model="subtitles"> -->
 
@@ -181,6 +184,9 @@
                 }
             },
             methods: {
+                podziel(){
+                    axios.get('/podziel.php')
+                },
                 download(){
                     axios.post('/output/pobierz.php',
                         new URLSearchParams({
