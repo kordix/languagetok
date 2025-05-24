@@ -127,7 +127,7 @@
 <br><br>
                 <div v-if="wgraj">
                     <label for="">Link</label>
-                    <input type="text" v-model="source">
+                    <input type="text" v-model="source" style="width:400px">
 
              
                     <label for="">Napisy</label>
@@ -138,12 +138,14 @@
                     <br>
                     <button @click="download">Ściągnij</button>
 
-
                     <label for="">Nazwa pliku</label>
                     <input type="text" v-model="filename">
                     <p v-if="filemessage" style="color:red">WPISZ NAZWĘ PLIKU</p>
                     <br>
                     <button @click="podziel">Podziel</button>
+
+
+                    <pre>{{response}}</pre>
 
                     <!-- <input type="text" v-model="subtitles"> -->
 
@@ -170,6 +172,7 @@
         Vue.createApp({
             data() {
                 return {
+                    response:'',
                     filemessage:'',
                     wgraj:false,
                     subtitles:'en',
@@ -190,6 +193,7 @@
             },
             methods: {
                 podziel(){
+                    let self = this;
                     this.filemessage = false;
                     if(!this.filename){
                         this.filemessage = true;
@@ -203,9 +207,10 @@
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
-                    });
+                    }).then((res)=>self.response = res.data);
                 },
                 download(){
+                    let self = this;
                     axios.post('/output/pobierz.php',
                         new URLSearchParams({
                             source: this.source,
@@ -214,7 +219,7 @@
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
-                    });
+                    }).then((res)=>self.response = res.data);
 
                 },
                 join(){
