@@ -134,6 +134,8 @@
                     <select name="" id="" v-model="subtitles">
                         <option value="en">en</option>
                         <option value="en-GB">en-GB</option>
+                        <option value="ru">ru</option>
+
                     </select>
                     <br>
                     <button @click="download">Ściągnij</button>
@@ -147,10 +149,9 @@
                     <button @click="podziel">Podziel</button>
 
                     <p style="color:red" v-if="loading"><b>Ładowanie...</b></p>
-                    <p v-if="response.indexOf('Converting subtitles') > 0" style="color:green"><b>Converting subtitles</b></p>
+                    
                     <p v-if="response.indexOf('[ExtractAudio] Destination: ./audio.mp3') > 0" style="color:green"><b>[ExtractAudio] Destination: ./audio.mp3</b></p>
-
-
+                    <p v-if="response.indexOf('There are no subtitles for the requested languages') > 0" style="color:red"><b>There are no subtitles for the requested languages</b></p>
                     <p v-if="response.indexOf('This video is drm protected and only images are available for download') > 0"><b>This video is drm protected and only images are available for download</b></p>
                     <pre>{{response}}</pre>
 
