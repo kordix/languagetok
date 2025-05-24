@@ -147,6 +147,7 @@
                     <button @click="podziel">Podziel</button>
 
                     <p style="color:red" v-if="loading"><b>Ładowanie...</b></p>
+                    <p v-if="respnse.indexOf('This video is drm protected and only images are available for download') > 0"><b>This video is drm protected and only images are available for download</b></p>
                     <pre>{{response}}</pre>
 
                     <!-- <input type="text" v-model="subtitles"> -->
