@@ -138,13 +138,15 @@
                     <br>
                     <button @click="download">Ściągnij</button>
 
+                   
+
                     <label for="">Nazwa pliku</label>
                     <input type="text" v-model="filename">
                     <p v-if="filemessage" style="color:red">WPISZ NAZWĘ PLIKU</p>
                     <br>
                     <button @click="podziel">Podziel</button>
 
-
+                    <p style="color:red" v-if="loading"><b>Ładowanie...</b></p>
                     <pre>{{response}}</pre>
 
                     <!-- <input type="text" v-model="subtitles"> -->
@@ -172,11 +174,12 @@
         Vue.createApp({
             data() {
                 return {
+                    loading:false,
                     response:'',
                     filemessage:'',
                     wgraj:false,
                     subtitles:'en',
-                    source:'https://www.youtube.com/watch?v=9QCgqQdmr0M',
+                    source:'',
                     filename:'',
                     list:false,
                     joininfo:false,
@@ -195,6 +198,7 @@
                 podziel(){
                     let self = this;
                     this.filemessage = false;
+                    this.loading = true;
                     if(!this.filename){
                         this.filemessage = true;
                         return;
@@ -207,10 +211,11 @@
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
-                    }).then((res)=>self.response = res.data);
+                    }).then((res)=>{self.response = res.data;self.loading=false});
                 },
                 download(){
                     let self = this;
+                    this.loading = true;
                     axios.post('/output/pobierz.php',
                         new URLSearchParams({
                             source: this.source,
@@ -219,7 +224,7 @@
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
-                    }).then((res)=>self.response = res.data);
+                    }).then((res)=>{self.response = res.data ;self.loading = false;});
 
                 },
                 join(){
