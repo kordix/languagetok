@@ -350,7 +350,7 @@
                     }
 
                     let filtered = self.fragments;
-                    let filtered = self.fragments.filter((el) => el.counter < self.counterset)
+                    filtered = self.fragments.filter((el) => el.counter < self.counterset)
 
                     if (filtered.length == 0) {
                         this.counterset += 1;
