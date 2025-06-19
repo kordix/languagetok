@@ -59,7 +59,7 @@ foreach ($entries as $i => $entry) {
     if($counter > 20){
        # return;
     }
-    $start = timeToSeconds($entry['start']);
+    $start = timeToSeconds($entry['start']) + $latency;
     $duration = timeToSeconds($entry['end']) - $start;
     if ($duration <= 0) {
         continue;
