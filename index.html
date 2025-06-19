@@ -60,13 +60,13 @@
                 <button class="favbutton btn-warning" v-if="favourite" @click="unsetFavourite">⭐Ulubione</button>
                 &nbsp;
                 <button v-if="!random" class="btn-secondary" @click="setRandom">🎲</button>
-
+a
                 <button v-if="random" class="btn btn-info glow" @click="unsetRandom">🎲</button>
 
             </div>
 
             <br>
-            <div v-for="(elem,index) in fragments" v-show="index == current">
+            <div v-for="(elem,index) in fragments" v-if="index == current">
                 <audio controls :id="'audioelem'+index">
                     <source :src="'/mp3/'+elem.filename" type="audio/mpeg">
                 </audio>
