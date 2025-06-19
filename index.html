@@ -131,22 +131,25 @@
 
              
                     <label for="">Napisy</label>
-                    <select name="" id="" v-model="subtitles">
+                    <select name="" id="" v-model="subtitles" style="margin-bottom:5px">
                         <option value="en">en</option>
                         <option value="en-GB">en-GB</option>
                         <option value="ru">ru</option>
 
                     </select>
                     <br>
-                    <button @click="download">Ściągnij</button>
+                    <button @click="download" :disabled="!source">⬇️ 1.Ściągnij</button>
 
                    
 
                     <label for="">Nazwa pliku</label>
-                    <input type="text" v-model="filename">
+                    <input type="text" v-model="filename" style="margin-bottom:5px">
                     <p v-if="filemessage" style="color:red">WPISZ NAZWĘ PLIKU</p>
                     <br>
-                    <button @click="podziel">Podziel</button>
+                    <label for="" style="display:inline">Opóźnienie &nbsp;</label>
+                    <input type="number" step="0.1" v-model="latency" placeholder="opóźnienie" style="width:33px;margin-bottom:5px;display:inline">
+                    <br>
+                    <button @click="podziel" :disabled="!filename">🧩 2.Podziel</button>
 
                     <p style="color:red" v-if="loading"><b>Ładowanie...</b></p>
                     
@@ -180,6 +183,7 @@
         Vue.createApp({
             data() {
                 return {
+                    latency:0,
                     loading:false,
                     response:'',
                     filemessage:'',
@@ -212,7 +216,8 @@
                     axios.post('/podziel.php',
                         new URLSearchParams({
                             file: this.filename,
-                            subtitles: this.subtitles
+                            subtitles: this.subtitles,
+                            latency:this.latency
                         }), {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'

@@ -8,6 +8,7 @@ $sep = DIRECTORY_SEPARATOR;
 require_once 'db.php';
 
 $sub = $_POST['subtitles'];
+$latency = $_POST['latency'];
 
 if(!isset($sub)){
     echo 'BRAK SUB';
